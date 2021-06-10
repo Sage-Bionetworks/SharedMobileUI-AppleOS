@@ -47,14 +47,16 @@ public class PagedNavigationViewModel : ObservableObject {
     @Published public var forwardButtonText: LocalizedString? = nil
     @Published public var isEstimated: Bool = false
     
-    lazy public var goForward: (() -> Void) = {
+    lazy public var goForward: (() -> Void) = increment
+    public func increment() {
         guard self.currentIndex + 1 < self.pageCount else { return }
         self.currentIndex += 1
         self.backEnabled = self.currentIndex > 0
         self.currentDirection = .forward
     }
     
-    lazy public var goBack: (() -> Void) = {
+    lazy public var goBack: (() -> Void) = decrement
+    public func decrement() {
         guard self.currentIndex > 0 else { return }
         self.currentIndex -= 1
         self.backEnabled = self.currentIndex > 0

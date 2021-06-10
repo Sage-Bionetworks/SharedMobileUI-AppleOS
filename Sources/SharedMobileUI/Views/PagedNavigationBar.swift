@@ -32,14 +32,20 @@
 
 import SwiftUI
 
-struct PagedNavigationBar : View {
+public struct PagedNavigationBar : View {
     @EnvironmentObject var viewModel: PagedNavigationViewModel
-    var body: some View {
+    
+    public init() {
+    }
+    
+    public var body: some View {
         VStack(spacing: 0.0) {
             
             if viewModel.pageCount > 0, !viewModel.isEstimated {
                 PagingDotsView()
                     .padding(.horizontal, 40.0)
+                    .padding(.vertical, (viewModel.forwardButtonText != nil) || viewModel.pageCount > 7 ?
+                                8.0 : 0.0)
             }
                 
             HStack {
@@ -51,7 +57,7 @@ struct PagedNavigationBar : View {
                 
                 Button(action: viewModel.goForward, label: {
                     if let buttonText = viewModel.forwardButtonText {
-                        Text(buttonText.key, tableName: nil, bundle: buttonText.bundle, comment: "")
+                        Text(buttonText.key, bundle: buttonText.bundle)
                     }
                     else {
                         Text("Next")
@@ -64,8 +70,6 @@ struct PagedNavigationBar : View {
         }
     }
 }
-
-
 
 struct PagingDotsView : View {
     @EnvironmentObject var viewModel: PagedNavigationViewModel

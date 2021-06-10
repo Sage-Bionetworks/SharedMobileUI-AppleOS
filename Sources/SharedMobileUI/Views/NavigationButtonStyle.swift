@@ -1,5 +1,5 @@
 //
-//  TextButtonView.swift
+//  NavigationButtonStyle.swift
 //  
 //
 //  Copyright © 2021 Sage Bionetworks. All rights reserved.
@@ -69,7 +69,7 @@ public struct NavigationButtonStyle : ButtonStyle {
     }
 }
 
-struct TextButtonView_Previews: PreviewProvider {
+struct NavigationButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             Button("Button", action: {})
