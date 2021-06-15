@@ -1,7 +1,7 @@
 //
 //  Color+Custom.swift
 //
-//  Copyright © 2021 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,4 +36,44 @@ extension Color {
     public static let sageBlack: Color = .init("sageBlack", bundle: Bundle.module)
     public static let sageWhite: Color = .init("sageWhite", bundle: Bundle.module)
     public static let screenBackground: Color = .init("screenBackground", bundle: Bundle.module)
+    
+    public init?(hex: String) {
+        let hexString = hex.hasPrefix("#") || hex.hasPrefix("0x") ? String(hex.suffix(6)) : hex
+        if hexString == "FFFFFF" || hexString == "white" {
+            self.init(white: 1)
+        }
+        else if hexString == "000000" || hexString == "black" {
+            self.init(white: 0)
+        }
+        else if let (r,g,b) = rbgValues(from: hexString) {
+            self.init(red: r, green: g, blue: b)
+        }
+        else {
+            return nil
+        }
+    }
+}
+
+fileprivate func rbgValues(from hexColor: String) -> (red: Double, green: Double, blue: Double)? {
+    
+    // If there aren't 6 characters in the hex color then return nil.
+    guard hexColor.count == 6 else {
+        debugPrint("WARNING! hexColor '\(hexColor)' does not have 6 characters.")
+        return nil
+    }
+    
+    let scanner = Scanner(string: hexColor)
+    var hexNumber: UInt64 = 0
+        
+    // Scan the string into a hex.
+    guard scanner.scanHexInt64(&hexNumber) else {
+        debugPrint("WARNING! hexColor '\(hexColor)' failed to scan.")
+        return nil
+    }
+    
+    let r = Double((hexNumber & 0xff0000) >> 16) / 255
+    let g = Double((hexNumber & 0x00ff00) >> 8) / 255
+    let b = Double((hexNumber & 0x0000ff) >> 0) / 255
+    
+    return (r, g, b)
 }
