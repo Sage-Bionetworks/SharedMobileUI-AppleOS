@@ -35,6 +35,9 @@ import SwiftUI
 
 public struct InstructionContentView: View {
     
+    /// The fontRatio determines how big the image is (or whether or not it is hidden) based on the accessiblity size.
+    @ScaledMetric var fontRatio: CGFloat = 1
+    
     let title: LocalizedStringKey
     let detail: LocalizedStringKey
     let imageName: String?
@@ -53,24 +56,17 @@ public struct InstructionContentView: View {
     public var body: some View {
         ScrollView {
             // Only show the image if the font size is not extra large.
-            let fontRatio: CGFloat = Font.fontRatio()
             if let imageName = self.imageName,
-                fontRatio < 1.5 {
-                
-                // If the accessibility for text is large then shrink the image
-                // so that it doesn't take the whole screen.
-                let imageRatio: CGFloat = (fontRatio > 1.0) ? (1.0 / fontRatio) : 1.0
-                let height = 160.0 * imageRatio
-                
+               fontRatio < 1.5 {
                 Image(imageName, bundle: bundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: height, alignment: .center)
+                    .frame(height: 160.0 / fontRatio, alignment: .center)
                     .padding(.top, 10.0)
-                    .padding(.bottom, 44.0)
             }
             Text(title, bundle: bundle)
                 .font(.italicPlayfairDisplayFont(22, relativeTo: .title, weight: .regular))
+                .padding(.top, 44.0)
                 .padding(.bottom, 14.0)
                 .padding(.horizontal, 60.0)
             Text(detail, bundle: bundle)
