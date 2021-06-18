@@ -32,9 +32,12 @@
 
 import SwiftUI
 
-struct ScreenBackground<Content> : View where Content : View {
+public struct ScreenBackground<Content> : View where Content : View {
     @ViewBuilder let content: () -> Content
-    var body: some View {
+    public init(content: @escaping () -> Content) {
+        self.content = content
+    }
+    public var body: some View {
         Color.screenBackground
             .edgesIgnoringSafeArea(.all)
             .overlay(content())
