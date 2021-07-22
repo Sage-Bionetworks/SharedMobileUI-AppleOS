@@ -45,7 +45,7 @@ public class PagedNavigationViewModel : ObservableObject {
     @Published public var backEnabled: Bool = false
     @Published public var currentDirection: Direction = .forward
     @Published public var forwardButtonText: LocalizedString? = nil
-    @Published public var isEstimated: Bool = false
+    @Published public var progressHidden: Bool
     
     lazy public var goForward: (() -> Void) = increment
     public func increment() {
@@ -63,8 +63,9 @@ public class PagedNavigationViewModel : ObservableObject {
         self.currentDirection = .backward
     }
     
-    public init(pageCount: Int = 0, currentIndex: Int = 0, buttonText: LocalizedString? = nil) {
+    public init(pageCount: Int = 0, currentIndex: Int = 0, buttonText: LocalizedString? = nil, progressHidden: Bool = false) {
         self.pageCount = pageCount
+        self.progressHidden = progressHidden
         self.currentIndex = currentIndex
         self.backEnabled = currentIndex > 0
         self.forwardButtonText = buttonText

@@ -65,7 +65,7 @@ public struct InstructionContentView: View {
                     .padding(.top, 10.0)
             }
             Text(title, bundle: bundle)
-                .font(.italicPlayfairDisplayFont(22, relativeTo: .title, weight: .regular))
+                .font(.playfairDisplayFont(22, relativeTo: .title, weight: .regular))
                 .padding(.top, 44.0)
                 .padding(.bottom, 14.0)
                 .padding(.horizontal, 60.0)

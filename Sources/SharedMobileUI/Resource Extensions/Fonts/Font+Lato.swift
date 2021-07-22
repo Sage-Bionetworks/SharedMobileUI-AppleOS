@@ -47,10 +47,15 @@ extension Font {
     ///     - textSyle: The relative text style for the text.
     ///     - weight: The weight of the font requested.
     /// - returns: The closest font to the one requested that is registered for this application.
-    public static func latoFont(_ size: CGFloat, relativeTo textStyle: TextStyle = .body, weight: Font.Weight = .regular) -> Font {
+    public static func latoFont(_ size: CGFloat, relativeTo textStyle: TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
         let fontName = FontWrapper.shared.fontName(weight)
         if #available(iOS 14.0, *) {
-            return .custom(fontName, size: size, relativeTo: textStyle)
+            if let textStyle = textStyle {
+                return .custom(fontName, size: size, relativeTo: textStyle)
+            }
+            else {
+                return .custom(fontName, fixedSize: size)
+            }
         } else {
             return .custom(fontName, size: size)
         }
@@ -58,10 +63,15 @@ extension Font {
     
     /// Returns the Lato italic font embedded in this framework.
     /// - seealso: `latoFont()`
-    public static func italicLatoFont(_ size: CGFloat, relativeTo textStyle: TextStyle = .body, weight: Font.Weight = .regular) -> Font {
+    public static func italicLatoFont(_ size: CGFloat, relativeTo textStyle: TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
         let fontName = FontWrapper.shared.italicFontName(weight)
         if #available(iOS 14.0, *) {
-            return .custom(fontName, size: size, relativeTo: textStyle)
+            if let textStyle = textStyle {
+                return .custom(fontName, size: size, relativeTo: textStyle)
+            }
+            else {
+                return .custom(fontName, fixedSize: size)
+            }
         } else {
             return .custom(fontName, size: size)
         }

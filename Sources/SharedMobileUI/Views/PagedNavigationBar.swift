@@ -35,15 +35,15 @@ import SwiftUI
 public struct PagedNavigationBar : View {
     @EnvironmentObject var viewModel: PagedNavigationViewModel
     
+    
     public init() {
     }
     
     public var body: some View {
         VStack(spacing: 0.0) {
             
-            if viewModel.pageCount > 0, !viewModel.isEstimated {
+            if viewModel.pageCount > 0, !viewModel.progressHidden {
                 PagingDotsView()
-                    .padding(.horizontal, 40.0)
                     .padding(.vertical, (viewModel.forwardButtonText != nil) || viewModel.pageCount > 7 ?
                                 8.0 : 0.0)
             }
@@ -66,7 +66,6 @@ public struct PagedNavigationBar : View {
                 .buttonStyle(NavigationButtonStyle((viewModel.forwardButtonText == nil) ? .forward : .text))
                 .opacity(viewModel.forwardEnabled ? 1.0 : 0.8)
             }
-            .frame(width: 160+48+48)
         }
     }
 }

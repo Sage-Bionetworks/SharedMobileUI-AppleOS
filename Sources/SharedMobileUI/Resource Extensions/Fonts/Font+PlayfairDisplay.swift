@@ -34,12 +34,9 @@ import SwiftUI
 
 extension Font {
     
-    /// Returns the most appropriate Lato font found by the system. This will first check for the
-    /// Lato font that matches the requested weight. If not found (because this framework only
-    /// includes a subset of the full Lato font family), then it will fall back to the most
-    /// appropriate font registered from this framework.
+    /// Returns the most appropriate Playfair Display font found by the system. 
     ///
-    /// This framework does not include all the possible sizes and weights for the Lato font
+    /// This framework does not include all the possible sizes and weights for the font
     /// because the full font family is about 11 mb.
     ///
     /// - parameters:
@@ -47,21 +44,15 @@ extension Font {
     ///     - textSyle: The relative text style for the text.
     ///     - weight: The weight of the font requested.
     /// - returns: The closest font to the one requested that is registered for this application.
-    public static func playfairDisplayFont(_ size: CGFloat, relativeTo textStyle: TextStyle = .body, weight: Font.Weight = .regular) -> Font {
+    public static func playfairDisplayFont(_ size: CGFloat, relativeTo textStyle: TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
         let fontName = FontWrapper.shared.fontName(weight)
         if #available(iOS 14.0, *) {
-            return .custom(fontName, size: size, relativeTo: textStyle)
-        } else {
-            return .custom(fontName, size: size)
-        }
-    }
-    
-    /// Returns the PlayfairDisplay italic font embedded in this framework.
-    /// - seealso: `playfairDisplayFont()`
-    public static func italicPlayfairDisplayFont(_ size: CGFloat, relativeTo textStyle: TextStyle = .body, weight: Font.Weight = .regular) -> Font {
-        let fontName = FontWrapper.shared.italicFontName(weight)
-        if #available(iOS 14.0, *) {
-            return .custom(fontName, size: size, relativeTo: textStyle)
+            if let textStyle = textStyle {
+                return .custom(fontName, size: size, relativeTo: textStyle)
+            }
+            else {
+                return .custom(fontName, fixedSize: size)
+            }
         } else {
             return .custom(fontName, size: size)
         }
