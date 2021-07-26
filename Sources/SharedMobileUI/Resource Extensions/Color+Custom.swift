@@ -33,9 +33,10 @@
 import SwiftUI
 
 extension Color {
-    public static let sageBlack: Color = .init("sageBlack", bundle: Bundle.module)
-    public static let sageWhite: Color = .init("sageWhite", bundle: Bundle.module)
-    public static let screenBackground: Color = .init("screenBackground", bundle: Bundle.module)
+    public static let sageBlack: Color = .init("sageBlack", bundle: .module)
+    public static let sageWhite: Color = .init("sageWhite", bundle: .module)
+    public static let screenBackground: Color = .init("screenBackground", bundle: .module)
+    public static let textForeground: Color = .init("textForeground", bundle: .module)
     
     public init?(hex: String) {
         let hexString = hex.hasPrefix("#") || hex.hasPrefix("0x") ? String(hex.suffix(6)) : hex
