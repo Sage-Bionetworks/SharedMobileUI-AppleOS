@@ -33,11 +33,24 @@
 import SwiftUI
 
 extension Color {
+    
+    // Named colors
     public static let sageBlack: Color = .init("sageBlack", bundle: .module)
     public static let sageWhite: Color = .init("sageWhite", bundle: .module)
     public static let screenBackground: Color = .init("screenBackground", bundle: .module)
     public static let textForeground: Color = .init("textForeground", bundle: .module)
     
+    // Shades of gray
+    public static let hex2A2A2A: Color = .init("#2A2A2A", bundle: .module)
+    public static let hex727272: Color = .init("#727272", bundle: .module)
+    public static let hexB8B8B8: Color = .init("#B8B8B8", bundle: .module)
+    public static let hexDEDEDE: Color = .init("#DEDEDE", bundle: .module)
+    public static let hexDFDFDF: Color = .init("#DFDFDF", bundle: .module)
+    public static let hexE5E5E5: Color = .init("#E5E5E5", bundle: .module)
+    public static let hexF0F0F0: Color = .init("#F0F0F0", bundle: .module)
+    public static let hexFDFDFD: Color = .init("#FDFDFD", bundle: .module)
+    
+    /// Initialize with the hex color.
     public init?(hex: String) {
         let hexString = hex.hasPrefix("#") || hex.hasPrefix("0x") ? String(hex.suffix(6)) : hex
         if hexString == "FFFFFF" || hexString == "white" {
