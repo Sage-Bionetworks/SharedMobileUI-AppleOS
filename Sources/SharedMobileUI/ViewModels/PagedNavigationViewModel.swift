@@ -1,6 +1,6 @@
 //
-//  LocalizedString.swift
-//  
+//  PagedNavigationViewModel.swift
+//
 //
 //  Copyright © 2021 Sage Bionetworks. All rights reserved.
 //
@@ -33,18 +33,41 @@
 
 import SwiftUI
 
-public struct LocalizedString : Equatable, ExpressibleByStringInterpolation {
-    public let key: LocalizedStringKey
-    public let bundle: Bundle?
+public class PagedNavigationViewModel : ObservableObject {
     
-    public init(stringLiteral value: StringLiteralType) {
-        self.key = LocalizedStringKey(value)
-        self.bundle = nil
+    public enum Direction {
+        case forward, backward
+    }
+
+    @Published public var pageCount: Int
+    @Published public var currentIndex: Int
+    @Published public var forwardEnabled: Bool = true
+    @Published public var backEnabled: Bool = false
+    @Published public var currentDirection: Direction = .forward
+    @Published public var forwardButtonText: Text? = nil
+    @Published public var progressHidden: Bool
+    
+    lazy public var goForward: (() -> Void) = increment
+    public func increment() {
+        guard self.currentIndex + 1 < self.pageCount else { return }
+        self.currentIndex += 1
+        self.backEnabled = self.currentIndex > 0
+        self.currentDirection = .forward
     }
     
-    public init(_ key: LocalizedStringKey, bundle: Bundle?) {
-        self.key = key
-        self.bundle = bundle
+    lazy public var goBack: (() -> Void) = decrement
+    public func decrement() {
+        guard self.currentIndex > 0 else { return }
+        self.currentIndex -= 1
+        self.backEnabled = self.currentIndex > 0
+        self.currentDirection = .backward
+    }
+    
+    public init(pageCount: Int = 0, currentIndex: Int = 0, buttonText: Text? = nil, progressHidden: Bool = false) {
+        self.pageCount = pageCount
+        self.progressHidden = progressHidden
+        self.currentIndex = currentIndex
+        self.backEnabled = currentIndex > 0
+        self.forwardButtonText = buttonText
     }
 }
-

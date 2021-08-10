@@ -33,7 +33,7 @@
 import SwiftUI
 
 public struct ScreenBackground<Content> : View where Content : View {
-    @ViewBuilder let content: () -> Content
+    @ViewBuilder private let content: () -> Content
     public init(content: @escaping () -> Content) {
         self.content = content
     }

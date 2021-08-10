@@ -33,8 +33,7 @@
 import SwiftUI
 
 public struct PagedNavigationBar : View {
-    @EnvironmentObject var viewModel: PagedNavigationViewModel
-    
+    @EnvironmentObject private var viewModel: PagedNavigationViewModel
     
     public init() {
     }
@@ -54,10 +53,10 @@ public struct PagedNavigationBar : View {
                     .opacity(viewModel.backEnabled ? 1.0 : 0.0)
                 
                 Spacer()
-                
+                                
                 Button(action: viewModel.goForward, label: {
                     if let buttonText = viewModel.forwardButtonText {
-                        Text(buttonText.key, bundle: buttonText.bundle)
+                        buttonText
                     }
                     else {
                         Text("Next")
@@ -97,12 +96,12 @@ struct PagedNavigationBar_Previews: PreviewProvider {
             PagedNavigationBar()
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
             PagedNavigationBar()
-                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: "Next"))
+                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: Text("Next")))
             PagedNavigationBar()
-                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: "Next"))
+                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: Text("Next")))
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
             PagedNavigationBar()
-                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: "Next"))
+                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: Text("Next")))
                 .preferredColorScheme(.dark)
         }
     }

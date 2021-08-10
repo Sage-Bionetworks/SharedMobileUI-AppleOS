@@ -36,12 +36,12 @@ import SwiftUI
 public struct InstructionContentView: View {
     
     /// The fontRatio determines how big the image is (or whether or not it is hidden) based on the accessiblity size.
-    @ScaledMetric var fontRatio: CGFloat = 1
+    @ScaledMetric private var fontRatio: CGFloat = 1
     
-    let title: LocalizedStringKey
-    let detail: LocalizedStringKey
-    let imageName: String?
-    let bundle: Bundle?
+    private let title: LocalizedStringKey
+    private let detail: LocalizedStringKey
+    private let imageName: String?
+    private let bundle: Bundle?
     
     public init(title: LocalizedStringKey,
                 detail: LocalizedStringKey,
