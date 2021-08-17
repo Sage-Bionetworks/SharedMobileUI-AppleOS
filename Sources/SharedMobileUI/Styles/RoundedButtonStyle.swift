@@ -35,9 +35,11 @@ import SwiftUI
 /// A button with rounded corners.
 public struct RoundedButtonStyle : ButtonStyle {
     private let backgroundColor: Color
+    private let horizontalPadding: CGFloat
 
-    public init(_ backgroundColor: Color = .accentColor) {
+    public init(_ backgroundColor: Color = .accentColor, horizontalPadding: CGFloat = 40) {
         self.backgroundColor = backgroundColor
+        self.horizontalPadding = horizontalPadding
     }
     
     @ViewBuilder public func makeBody(configuration: Self.Configuration) -> some View {
@@ -46,7 +48,7 @@ public struct RoundedButtonStyle : ButtonStyle {
             .foregroundColor(.textForeground)
             .frame(minHeight: 48, idealHeight: 48)
             .frame(idealWidth: 209)
-            .padding(.horizontal, 40)
+            .padding(.horizontal, horizontalPadding)
             .background(self.backgroundColor)
             .clipShape(Capsule())
             .shadow(color: .textForeground.opacity(0.1), radius: 3, x: 1, y: 1)
