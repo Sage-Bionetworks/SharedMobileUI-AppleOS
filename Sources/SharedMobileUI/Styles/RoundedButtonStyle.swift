@@ -51,6 +51,6 @@ public struct RoundedButtonStyle : ButtonStyle {
             .padding(.horizontal, horizontalPadding)
             .background(self.backgroundColor)
             .clipShape(Capsule())
-            .shadow(color: .textForeground.opacity(0.1), radius: 3, x: 1, y: 1)
+            .shadow(color: Color.sageBlack.opacity(0.1), radius: 3, x: 1, y: 1)
     }
 }
