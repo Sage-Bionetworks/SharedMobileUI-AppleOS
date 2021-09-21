@@ -44,6 +44,22 @@ extension Font {
     ///
     /// - parameters:
     ///     - size: The size of the font requested.
+    ///     - weight: The weight of the font requested.
+    /// - returns: The closest font to the one requested that is registered for this application.
+    public static func latoFont(fixedSize size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        latoFont(size, relativeTo: nil, weight: weight)
+    }
+    
+    /// Returns the most appropriate Lato font found by the system. This will first check for the
+    /// Lato font that matches the requested weight. If not found (because this framework only
+    /// includes a subset of the full Lato font family), then it will fall back to the most
+    /// appropriate font registered from this framework.
+    ///
+    /// This framework does not include all the possible sizes and weights for the Lato font
+    /// because the full font family is about 11 mb.
+    ///
+    /// - parameters:
+    ///     - size: The size of the font requested.
     ///     - textSyle: The relative text style for the text.
     ///     - weight: The weight of the font requested.
     /// - returns: The closest font to the one requested that is registered for this application.
@@ -86,58 +102,31 @@ fileprivate class FontWrapper {
     
     private init() {
         let bundle = Bundle.module
-        Font.registerFont(filename: "lato_black.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_bold.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_bolditalic.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_italic.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_light.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_lightitalic.ttf", bundle: bundle)
-        Font.registerFont(filename: "lato_regular.ttf", bundle: bundle)
+        Font.registerFont(filename: "Lato-Bold.ttf", bundle: bundle)
+        Font.registerFont(filename: "Lato-BoldItalic.ttf", bundle: bundle)
+        Font.registerFont(filename: "Lato-Regular.ttf", bundle: bundle)
+        Font.registerFont(filename: "Lato-Italic.ttf", bundle: bundle)
     }
     
     func fontName(_ weight: Font.Weight) -> String {
         switch weight {
-        case .ultraLight:
-            return "Lato-Light"
-        case .thin:
-            return "Lato-Light"
-        case .light:
-            return "Lato-Light"
-        case .semibold:
-            return "Lato-Bold"
-        case .heavy:
-            return "Lato-Bold"
-        case .bold:
-            return "Lato-Bold"
-        case .black:
-            return "Lato-Black"
-        case .medium:
+        case .ultraLight, .thin, .light:
             return "Lato-Regular"
+        case .semibold, .heavy, .bold, .black:
+            return "Lato-Bold"
         default:
-            return "Lato-Regular"
+            return Font.isBoldTextEnabled ? "Lato-Bold" : "Lato-Regular"
         }
     }
-    
+        
     func italicFontName(_ weight: Font.Weight) -> String {
         switch weight {
-        case .ultraLight:
-            return "Lato-LightItalic"
-        case .thin:
-            return "Lato-LightItalic"
-        case .light:
-            return "Lato-LightItalic"
-        case .semibold:
-            return "Lato-BoldItalic"
-        case .bold:
-            return "Lato-BoldItalic"
-        case .heavy:
-            return "Lato-BoldItalic"
-        case .black:
-            return "Lato-BoldItalic"
-        case .medium:
+        case .ultraLight, .thin, .light:
             return "Lato-Italic"
+        case .semibold, .heavy, .bold, .black:
+            return "Lato-BoldItalic"
         default:
-            return "Lato-Italic"
+            return Font.isBoldTextEnabled ? "Lato-BoldItalic" : "Lato-Italic"
         }
     }
 }

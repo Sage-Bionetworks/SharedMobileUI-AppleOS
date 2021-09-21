@@ -36,6 +36,7 @@ import SwiftUI
 public struct RoundedButtonStyle : ButtonStyle {
     private let backgroundColor: Color
     private let horizontalPadding: CGFloat
+    private let font: Font = DesignSystem.fontRules.buttonFont(at: 1, isSelected: false)
 
     public init(_ backgroundColor: Color = .accentColor, horizontalPadding: CGFloat = 40) {
         self.backgroundColor = backgroundColor
@@ -44,7 +45,7 @@ public struct RoundedButtonStyle : ButtonStyle {
     
     @ViewBuilder public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(Font.latoFont(20, relativeTo: .title2, weight: .bold))
+            .font(font)
             .foregroundColor(.textForeground)
             .frame(minHeight: 48, idealHeight: 48)
             .frame(idealWidth: 209)

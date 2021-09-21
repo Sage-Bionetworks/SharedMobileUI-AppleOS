@@ -37,6 +37,7 @@ public struct NavigationButtonStyle : ButtonStyle {
     private let foregroundColor: Color
     private let backgroundColor: Color
     private let style: Style
+    private let font: Font = DesignSystem.fontRules.buttonFont(at: 1, isSelected: false)
     
     public enum Style {
         case text, forward, backward
@@ -58,7 +59,7 @@ public struct NavigationButtonStyle : ButtonStyle {
             Image.backButton
         default:
             configuration.label
-                .font(Font.latoFont(20, relativeTo: .title2, weight: .bold))
+                .font(font)
                 .foregroundColor(self.foregroundColor)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(height: 48)

@@ -32,6 +32,14 @@
 
 import SwiftUI
 
+#if os(macOS)
+import AppKit
+fileprivate typealias TypedColor = NSColor
+#else
+import UIKit
+fileprivate typealias TypedColor = UIColor
+#endif
+
 extension Color {
     
     // Named colors
@@ -39,6 +47,16 @@ extension Color {
     public static let sageWhite: Color = .init("sageWhite", bundle: .module)
     public static let screenBackground: Color = .init("screenBackground", bundle: .module)
     public static let textForeground: Color = .init("textForeground", bundle: .module)
+    
+    // App colors
+    public static let textLinkColor: Color = {
+        if let _ = TypedColor.init(named: "LinkColor") {
+            return .init("LinkColor")
+        }
+        else {
+            return .accentColor
+        }
+    }()
     
     // Shades of gray
     public static let hex2A2A2A: Color = .init("#2A2A2A", bundle: .module)
