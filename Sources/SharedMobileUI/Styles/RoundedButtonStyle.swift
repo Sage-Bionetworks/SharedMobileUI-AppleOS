@@ -37,7 +37,11 @@ public struct RoundedButtonStyle : ButtonStyle {
     private let backgroundColor: Color
     private let horizontalPadding: CGFloat
     private let font: Font = DesignSystem.fontRules.buttonFont(at: 1, isSelected: false)
-
+    
+    /// Initializer.
+    /// - Parameters:
+    ///   - backgroundColor: The background color for the button.
+    ///   - horizontalPadding: The horizontal padding.
     public init(_ backgroundColor: Color = .accentColor, horizontalPadding: CGFloat = 40) {
         self.backgroundColor = backgroundColor
         self.horizontalPadding = horizontalPadding

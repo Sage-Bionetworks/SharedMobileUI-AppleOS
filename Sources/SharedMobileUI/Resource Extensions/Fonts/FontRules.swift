@@ -32,20 +32,61 @@
 
 import SwiftUI
 
+/// A protocol that can be used to return a set of consistent font sizes, style, weights, and colors for the
+/// ``Text`` displayed in a given app.
+///
+/// The font rules for an app can be accessed as a static property on the  ``DesignSystem``.
+///
+/// ```swift
+///     Text("Hello, World")
+///         .font(DesignSystem.fontRules.bodyFont(at: 2, isEmphasis: false))
+/// ```
 public protocol FontRules {
     
+    /// The maximum supported header level returned by the method ``headerFont(at:)``.
     var maxSupportedHeaderLevel: Int { get }
+    
+    /// Return the ``Font`` for this ``level`` of header text.
+    ///
+    /// - Parameter level: The incremental level (h1, h2, h3, etc.) of the header.
+    /// - Returns: The ``Font`` for this level of text.
     func headerFont(at level: Int) -> Font
     
+    /// The maximum supported body level returned by the method ``bodyFont(at:isEmphasis:)``.
     var maxSupportedBodyLevel: Int { get }
+    
+    /// Returns the ``Font`` for this level of paragraph text.
+    ///
+    /// - Parameters:
+    ///   - level: The incremental level (p1, p2, etc.) of the paragraph.
+    ///   - isEmphasis: Whether or not this text should be emphasized.
+    /// - Returns: The ``Font`` for this level of text.
     func bodyFont(at level: Int, isEmphasis: Bool) -> Font
     
+    /// The maximum supported button level returned by the method ``buttonFont(at:isSelected:)``.
     var maxSupportedButtonLevel: Int { get }
+    
+    /// Returns the ``Font`` for this button level and selection state.
+    ///
+    /// - Parameters:
+    ///   - level: The incremental level (btn1, btn2, etc.) of the button.
+    ///   - isSelected: Whether or not the button is selected.
+    /// - Returns: The ``Font`` for this level of text.
     func buttonFont(at level: Int, isSelected: Bool) -> Font
+    
+    /// Returns the ``Color`` for this button level and selection state.
+    ///
+    /// - Parameters:
+    ///   - level: The incremental level (btn1, btn2, etc.) of the button.
+    ///   - isSelected: Whether or not the button is selected.
+    /// - Returns: The ``Color`` for this button level.
     func buttonColor(at level: Int, isSelected: Bool) -> Color
 }
 
+/// A public static accessor for accessing shared fonts used throughout an app.
 public final class DesignSystem {
+    
+    /// The ``FontRules`` set by this app *or* the default font rules if not explicitly set.
     public static var fontRules : FontRules = DefaultFontRules()
 }
 

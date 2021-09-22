@@ -33,6 +33,7 @@
 
 import SwiftUI
 
+/// A view for displaying content that includes a title, detail, and image.
 public struct InstructionContentView: View {
     
     /// The fontRatio determines how big the image is (or whether or not it is hidden) based on the accessiblity size.
@@ -43,6 +44,12 @@ public struct InstructionContentView: View {
     private let imageName: String?
     private let bundle: Bundle?
     
+    /// Initializer.
+    /// - Parameters:
+    ///   - title: The localized string key for the title of the view.
+    ///   - detail: The localized string key for the detail of the view.
+    ///   - imageName: The image name for the image to display in the view.
+    ///   - bundle: The bundle for the localized strings and images.
     public init(title: LocalizedStringKey,
                 detail: LocalizedStringKey,
                 imageName: String? = nil,
