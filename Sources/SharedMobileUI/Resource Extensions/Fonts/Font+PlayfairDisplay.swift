@@ -34,6 +34,19 @@ import SwiftUI
 
 extension Font {
     
+    /// Returns the most appropriate Playfair Display font found by the system.
+    ///
+    /// This framework does not include all the possible sizes and weights for the font
+    /// because the full font family is about 11 mb.
+    ///
+    /// - parameters:
+    ///     - size: The size of the font requested.
+    ///     - weight: The weight of the font requested.
+    /// - returns: The closest font to the one requested that is registered for this application.
+    public static func playfairDisplayFont(fixedSize size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        playfairDisplayFont(size, relativeTo: nil, weight: weight)
+    }
+    
     /// Returns the most appropriate Playfair Display font found by the system. 
     ///
     /// This framework does not include all the possible sizes and weights for the font
@@ -70,11 +83,11 @@ fileprivate class FontWrapper {
     }
     
     func fontName(_ weight: Font.Weight) -> String {
-        "PlayfairDisplay-Italic"
+        Font.isBoldTextEnabled ? "PlayfairDisplay-BoldItalic" : "PlayfairDisplay-Italic"
     }
     
     func italicFontName(_ weight: Font.Weight) -> String {
-        "PlayfairDisplay-Italic"
+        Font.isBoldTextEnabled ? "PlayfairDisplay-BoldItalic" : "PlayfairDisplay-Italic"
     }
 }
 

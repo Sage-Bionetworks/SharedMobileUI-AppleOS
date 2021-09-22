@@ -42,8 +42,18 @@ fileprivate typealias TypedFont = UIFont
 
 extension Font {
     
+    /// Is accessibility turned "ON" for bold text?
+    public static var isBoldTextEnabled: Bool {
+        #if os(macOS)
+            return false
+        #else
+            return UIAccessibility.isBoldTextEnabled
+        #endif
+    }
+    
     /// Rough estimate of the dynamic text size for body text style. This can be used to resize or hide
     /// secondary images when the text would be extra large.
+    @available(*, deprecated, message: "Use `@ScaledMetric` or `@SwiftUI.Environment(\\.sizeCategory)` instead." )
     public static func fontRatio() -> CGFloat {
         let font = TypedFont.preferredFont(forTextStyle: .body)
         return font.pointSize / 17

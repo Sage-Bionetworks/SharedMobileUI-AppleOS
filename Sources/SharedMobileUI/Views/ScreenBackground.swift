@@ -32,6 +32,7 @@
 
 import SwiftUI
 
+/// A view for setting the screen background to be ``Color.screenBackground``.
 public struct ScreenBackground<Content> : View where Content : View {
     private let content: Content
     public init(@ViewBuilder content: @escaping () -> Content) {

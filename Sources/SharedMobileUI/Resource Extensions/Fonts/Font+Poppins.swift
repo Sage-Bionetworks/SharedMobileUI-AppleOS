@@ -44,6 +44,22 @@ extension Font {
     ///
     /// - parameters:
     ///     - size: The size of the font requested.
+    ///     - weight: The weight of the font requested.
+    /// - returns: The closest font to the one requested that is registered for this application.
+    public static func poppinsFont(fixedSize size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        poppinsFont(size, relativeTo: nil, weight: weight)
+    }
+    
+    /// Returns the most appropriate Poppins font found by the system. This will first check for the
+    /// Poppins font that matches the requested weight. If not found (because this framework only
+    /// includes a subset of the full Poppins font family), then it will fall back to the most
+    /// appropriate font registered from this framework.
+    ///
+    /// This framework does not include all the possible sizes and weights for the Poppins font
+    /// because the full font family is about 11 mb.
+    ///
+    /// - parameters:
+    ///     - size: The size of the font requested.
     ///     - textSyle: The relative text style for the text.
     ///     - weight: The weight of the font requested.
     /// - returns: The closest font to the one requested that is registered for this application.
@@ -70,29 +86,17 @@ fileprivate class FontWrapper {
     private init() {
         let bundle = Bundle.module
         Font.registerFont(filename: "Poppins-Medium.ttf", bundle: bundle)
-        Font.registerFont(filename: "Poppins-SemiBold.ttf", bundle: bundle)
+        Font.registerFont(filename: "Poppins-Bold.ttf", bundle: bundle)
     }
     
     func fontName(_ weight: Font.Weight) -> String {
         switch weight {
-        case .ultraLight:
+        case .ultraLight, .thin, .light:
             return "Poppins-Medium"
-        case .thin:
-            return "Poppins-Medium"
-        case .light:
-            return "Poppins-Medium"
-        case .semibold:
-            return "Poppins-SemiBold"
-        case .heavy:
-            return "Poppins-SemiBold"
-        case .bold:
-            return "Poppins-SemiBold"
-        case .black:
-            return "Poppins-SemiBold"
-        case .medium:
-            return "Poppins-Medium"
+        case .semibold, .heavy, .bold, .black:
+            return "Poppins-Bold"
         default:
-            return "Poppins-Medium"
+            return Font.isBoldTextEnabled ? "Poppins-Bold" : "Poppins-Medium"
         }
     }
 }

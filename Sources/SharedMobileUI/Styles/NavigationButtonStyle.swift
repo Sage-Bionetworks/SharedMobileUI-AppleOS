@@ -33,15 +33,25 @@
 
 import SwiftUI
 
+/// A  button style used to define the style of a button used in navigating.
 public struct NavigationButtonStyle : ButtonStyle {
     private let foregroundColor: Color
     private let backgroundColor: Color
     private let style: Style
+    private let font: Font = DesignSystem.fontRules.buttonFont(at: 1, isSelected: false)
     
+    /// The style of navigation. This can be ``forward``, ``backward``, or ``text`` where
+    /// the ``text`` style indicates that the configuration ``Label`` should be shown rather
+    /// than replacing the accessibility text with an image of an arrow.
     public enum Style {
         case text, forward, backward
     }
     
+    /// Initializer.
+    /// - Parameters:
+    ///   - style: The ``Style`` of the button.
+    ///   - foregroundColor: The foreground color.
+    ///   - backgroundColor: The background color.
     public init(_ style: Style = .text,
                 foregroundColor: Color = Color.sageWhite,
                 backgroundColor: Color = Color.sageBlack) {
@@ -58,7 +68,7 @@ public struct NavigationButtonStyle : ButtonStyle {
             Image.backButton
         default:
             configuration.label
-                .font(Font.latoFont(20, relativeTo: .title2, weight: .bold))
+                .font(font)
                 .foregroundColor(self.foregroundColor)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(height: 48)

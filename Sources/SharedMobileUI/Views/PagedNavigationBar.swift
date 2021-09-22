@@ -32,6 +32,9 @@
 
 import SwiftUI
 
+/// A view for displaying forward/back navigation buttons and a progress indicator.
+/// This view uses the ``PagedNavigationViewModel`` as its view model with that
+/// object set up as an `@EnvironmentObject`.
 public struct PagedNavigationBar : View {
     @EnvironmentObject private var viewModel: PagedNavigationViewModel
     
