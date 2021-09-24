@@ -158,10 +158,10 @@ struct DefaultFontRules : FontRules {
         case .button1:
             return .latoFont(20, relativeTo: .largeTitle, weight: .bold)
         case .button2:
-            return .latoFont(fixedSize: 12, weight: isSelected ? .medium : .bold)
+            return .latoFont(fixedSize: 14, weight: isSelected ? .bold : .medium)
         case .none:
             debugPrint("WARNING: Level \(level) buttons are not supported by this FontRules.")
-            return .latoFont(fixedSize: 10, weight: isSelected ? .medium : .bold)
+            return .latoFont(fixedSize: 12, weight: isSelected ? .bold : .medium)
         }
     }
     
