@@ -77,7 +77,7 @@ public struct InstructionContentView: View {
                 .padding(.bottom, 14.0)
                 .padding(.horizontal, 60.0)
             Text(detail, bundle: bundle)
-                .font(DesignSystem.fontRules.bodyFont(at: 2, isEmphasis: false))
+                .font(DesignSystem.fontRules.bodyFont(at: 1, isEmphasis: false))
                 .padding(.horizontal, 56.0)
                 .padding(.bottom, 14.0)
                 .lineLimit(nil)
