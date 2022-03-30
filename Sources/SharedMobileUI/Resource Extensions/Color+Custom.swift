@@ -60,6 +60,7 @@ extension Color {
     
     // Shades of gray
     public static let hex2A2A2A: Color = .init("#2A2A2A", bundle: .module)
+    public static let hex3E3E3E: Color = .init("#3E3E3E", bundle: .module)
     public static let hex727272: Color = .init("#727272", bundle: .module)
     public static let hexB8B8B8: Color = .init("#B8B8B8", bundle: .module)
     public static let hexDEDEDE: Color = .init("#DEDEDE", bundle: .module)
