@@ -71,6 +71,7 @@ extension Color {
     public static let hexDFDFDF: Color = .init("#DFDFDF", bundle: .module)
     public static let hexE5E5E5: Color = .init("#E5E5E5", bundle: .module)
     public static let hexF0F0F0: Color = .init("#F0F0F0", bundle: .module)
+    public static let hexF6F6F6: Color = .init("#F6F6F6", bundle: .module)
     public static let hexFDFDFD: Color = .init("#FDFDFD", bundle: .module)
     
     /// Initialize with the hex color.
