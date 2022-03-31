@@ -1,6 +1,6 @@
 //
-//  RadioButtonToggleStyle.swift
-//  
+//  CheckboxToggleStyle.swift
+//
 //
 //  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //
@@ -33,10 +33,9 @@
 
 import SwiftUI
 
-public struct RadioButtonToggleStyle : ToggleStyle {
-    private let dotColor: Color = .hex3E3E3E
-    private let circleSize: CGFloat = 24
-    private let dotSize: CGFloat = 14.4
+public struct CheckboxToggleStyle : ToggleStyle {
+    private let boxColor: Color = .hex3E3E3E
+    private let boxSize: CGFloat = 22
     private let spacing: CGFloat
     
     public init(spacing: CGFloat = 8) {
@@ -48,18 +47,12 @@ public struct RadioButtonToggleStyle : ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             HStack(spacing: spacing) {
-                ZStack {
-                    Circle()
-                        .strokeBorder(dotColor, lineWidth: 2.5)
-                        .frame(width: circleSize, height: circleSize)
-                    Circle()
-                        .fill(dotColor)
-                        .frame(width: dotSize, height: dotSize)
-                        .opacity(configuration.isOn ? 1 : 0)
-                }
-                .padding(.top, 17)
-                .padding(.bottom, 15)
-                .padding(.leading, 24)
+                Image(systemName: configuration.isOn ? "checkmark.square" : "square")
+                    .foregroundColor(boxColor)
+                    .frame(width: boxSize, height: boxSize)
+                    .padding(.top, 17)
+                    .padding(.bottom, 15)
+                    .padding(.leading, 24)
                 
                 configuration.label
             }
