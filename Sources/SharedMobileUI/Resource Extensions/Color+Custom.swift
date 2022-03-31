@@ -1,7 +1,7 @@
 //
 //  Color+Custom.swift
 //
-//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,9 +35,13 @@ import SwiftUI
 #if os(macOS)
 import AppKit
 fileprivate typealias TypedColor = NSColor
-#else
+#elseif canImport(UIKit)
 import UIKit
 fileprivate typealias TypedColor = UIColor
+
+extension UIColor {
+    public static let textForeground: UIColor = .init(named: "textForeground", in: .module, compatibleWith: nil) ?? .label
+}
 #endif
 
 extension Color {
