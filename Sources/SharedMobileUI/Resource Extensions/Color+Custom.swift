@@ -1,7 +1,7 @@
 //
 //  Color+Custom.swift
 //
-//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,9 +35,13 @@ import SwiftUI
 #if os(macOS)
 import AppKit
 fileprivate typealias TypedColor = NSColor
-#else
+#elseif canImport(UIKit)
 import UIKit
 fileprivate typealias TypedColor = UIColor
+
+extension UIColor {
+    public static let textForeground: UIColor = .init(named: "textForeground", in: .module, compatibleWith: nil) ?? .label
+}
 #endif
 
 extension Color {
@@ -60,12 +64,14 @@ extension Color {
     
     // Shades of gray
     public static let hex2A2A2A: Color = .init("#2A2A2A", bundle: .module)
+    public static let hex3E3E3E: Color = .init("#3E3E3E", bundle: .module)
     public static let hex727272: Color = .init("#727272", bundle: .module)
     public static let hexB8B8B8: Color = .init("#B8B8B8", bundle: .module)
     public static let hexDEDEDE: Color = .init("#DEDEDE", bundle: .module)
     public static let hexDFDFDF: Color = .init("#DFDFDF", bundle: .module)
     public static let hexE5E5E5: Color = .init("#E5E5E5", bundle: .module)
     public static let hexF0F0F0: Color = .init("#F0F0F0", bundle: .module)
+    public static let hexF6F6F6: Color = .init("#F6F6F6", bundle: .module)
     public static let hexFDFDFD: Color = .init("#FDFDFD", bundle: .module)
     
     /// Initialize with the hex color.

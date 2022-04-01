@@ -1,7 +1,7 @@
 //
 //  Font+Lato.swift
 //
-//  Copyright © 2019-2021 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,6 +31,23 @@
 //
 
 import SwiftUI
+
+#if canImport(UIKit)
+import UIKit
+
+extension UIFont {
+    public static func latoFont(_ size: CGFloat, relativeTo textStyle: UIFont.TextStyle? = nil, weight: UIFont.Weight = .regular) -> UIFont {
+        let fontName = FontWrapper.shared.fontName(weight)
+        if let textStyle = textStyle,
+           let customFont = UIFont(name: fontName, size: size) {
+            return UIFontMetrics(forTextStyle: textStyle).scaledFont(for: customFont)
+        }
+        else {
+            return .init(name: fontName, size: size) ?? .systemFont(ofSize: size, weight: weight)
+        }
+    }
+}
+#endif
 
 extension Font {
     
@@ -63,7 +80,7 @@ extension Font {
     ///     - textSyle: The relative text style for the text.
     ///     - weight: The weight of the font requested.
     /// - returns: The closest font to the one requested that is registered for this application.
-    public static func latoFont(_ size: CGFloat, relativeTo textStyle: TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
+    public static func latoFont(_ size: CGFloat, relativeTo textStyle: Font.TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
         let fontName = FontWrapper.shared.fontName(weight)
         if #available(iOS 14.0, *) {
             if let textStyle = textStyle {
@@ -79,7 +96,7 @@ extension Font {
     
     /// Returns the Lato italic font embedded in this framework.
     /// - seealso: `latoFont()`
-    public static func italicLatoFont(_ size: CGFloat, relativeTo textStyle: TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
+    public static func italicLatoFont(_ size: CGFloat, relativeTo textStyle: Font.TextStyle? = nil, weight: Font.Weight = .regular) -> Font {
         let fontName = FontWrapper.shared.italicFontName(weight)
         if #available(iOS 14.0, *) {
             if let textStyle = textStyle {
@@ -92,7 +109,6 @@ extension Font {
             return .custom(fontName, size: size)
         }
     }
-    
 }
 
 /// The wrapper is used here to register the Lato fonts once only.
@@ -107,6 +123,21 @@ fileprivate class FontWrapper {
         Font.registerFont(filename: "Lato-Regular.ttf", bundle: bundle)
         Font.registerFont(filename: "Lato-Italic.ttf", bundle: bundle)
     }
+    
+    #if canImport(UIKit)
+    
+    func fontName(_ weight: UIFont.Weight) -> String {
+        switch weight {
+        case .ultraLight, .thin, .light:
+            return "Lato-Regular"
+        case .semibold, .heavy, .bold, .black:
+            return "Lato-Bold"
+        default:
+            return Font.isBoldTextEnabled ? "Lato-Bold" : "Lato-Regular"
+        }
+    }
+    
+    #endif
     
     func fontName(_ weight: Font.Weight) -> String {
         switch weight {
