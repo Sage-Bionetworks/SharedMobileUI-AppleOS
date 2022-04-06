@@ -36,7 +36,7 @@ import SwiftUI
 /// A view model for a page-style navigation.
 ///
 /// - SeeAlso: ``PagedNavigationBar``
-public class PagedNavigationViewModel : ObservableObject {
+public final class PagedNavigationViewModel : ObservableObject {
     
     /// The direction of the navigator.
     public enum Direction {
