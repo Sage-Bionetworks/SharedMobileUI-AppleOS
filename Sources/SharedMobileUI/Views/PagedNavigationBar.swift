@@ -37,14 +37,16 @@ import SwiftUI
 /// object set up as an `@EnvironmentObject`.
 public struct PagedNavigationBar : View {
     @EnvironmentObject private var viewModel: PagedNavigationViewModel
+    let showsDots: Bool
     
-    public init() {
+    public init(showsDots: Bool = true) {
+        self.showsDots = showsDots
     }
     
     public var body: some View {
         VStack(spacing: 0.0) {
             
-            if viewModel.pageCount > 0, !viewModel.progressHidden {
+            if self.showsDots, viewModel.pageCount > 0, !viewModel.progressHidden {
                 PagingDotsView()
                     .padding(.vertical, (viewModel.forwardButtonText != nil) || viewModel.pageCount > 7 ?
                                 8.0 : 0.0)
@@ -66,9 +68,28 @@ public struct PagedNavigationBar : View {
                     }
                 })
                 .buttonStyle(NavigationButtonStyle((viewModel.forwardButtonText == nil) ? .forward : .text))
-                .opacity(viewModel.forwardEnabled ? 1.0 : 0.8)
+                .buttonEnabled(viewModel.forwardEnabled)
             }
         }
+    }
+}
+
+extension View {
+    public func buttonEnabled(_ enabled: Bool) -> some View {
+        modifier(ButtonEnabledModifier(enabled: enabled))
+    }
+}
+
+public struct ButtonEnabledModifier : ViewModifier {
+    var enabled: Bool
+    public init(enabled: Bool) {
+        self.enabled = enabled
+    }
+    
+    public func body(content: Content) -> some View {
+        content
+            .opacity(enabled ? 1.0 : 0.5)
+            .disabled(!enabled)
     }
 }
 
