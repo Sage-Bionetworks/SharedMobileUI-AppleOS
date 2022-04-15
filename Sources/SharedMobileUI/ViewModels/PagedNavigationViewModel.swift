@@ -44,9 +44,17 @@ public final class PagedNavigationViewModel : ObservableObject {
     }
     
     /// The number of pages in the model.
-    @Published public var pageCount: Int
+    @Published public var pageCount: Int {
+        didSet {
+            updateFraction()
+        }
+    }
     /// The current index (or page).
-    @Published public var currentIndex: Int
+    @Published public var currentIndex: Int {
+        didSet {
+            updateFraction()
+        }
+    }
     /// Is forward enabled?
     @Published public var forwardEnabled: Bool = true
     /// Is back enabled?
@@ -57,6 +65,12 @@ public final class PagedNavigationViewModel : ObservableObject {
     @Published public var forwardButtonText: Text? = nil
     /// Should the progress indicator be hidden?
     @Published public var progressHidden: Bool
+    /// progress as a fraction
+    @Published public var fraction: Double = 0
+    
+    func updateFraction() {
+        self.fraction = Double(currentIndex) / Double(pageCount > 0 ? pageCount : 1)
+    }
     
     /// The action to call when the forward button is tapped. This will default to calling ``increment()``.
     lazy public var goForward: (() -> Void) = increment
