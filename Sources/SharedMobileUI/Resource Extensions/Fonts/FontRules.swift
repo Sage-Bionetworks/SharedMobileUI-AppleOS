@@ -90,16 +90,28 @@ public final class DesignSystem {
     public static var fontRules : FontRules = DefaultFontRules()
 }
 
-fileprivate enum HeaderLevel: Int, CaseIterable {
+enum HeaderLevel: Int, CaseIterable {
     case h1 = 1, h2, h3, h4, h5, h6, h7
 }
 
-fileprivate enum BodyLevel: Int, CaseIterable {
+enum BodyLevel: Int, CaseIterable {
     case body1 = 1, body2
 }
 
-fileprivate enum ButtonLevel: Int, CaseIterable {
-    case button1 = 1, button2
+enum ButtonLevel: Int, CaseIterable {
+    case button1 = 1, button2, underlinedButton
+}
+
+extension FontRules {
+    func headerFont(at level: HeaderLevel) -> Font {
+        headerFont(at: level.rawValue)
+    }
+    func bodyFont(at level: BodyLevel, isEmphasis: Bool = false) -> Font {
+        bodyFont(at: level.rawValue, isEmphasis: isEmphasis)
+    }
+    func buttonFont(at level: ButtonLevel, isSelected: Bool = false) -> Font {
+        buttonFont(at: level.rawValue, isSelected: isSelected)
+    }
 }
 
 struct DefaultFontRules : FontRules {
@@ -156,9 +168,11 @@ struct DefaultFontRules : FontRules {
     func buttonFont(at level: Int, isSelected: Bool) -> Font {
         switch ButtonLevel(rawValue: level) {
         case .button1:
-            return .latoFont(20, relativeTo: .largeTitle, weight: .bold)
+            return .latoFont(fixedSize: 20, weight: .bold)
         case .button2:
             return .latoFont(fixedSize: 14, weight: isSelected ? .bold : .medium)
+        case .underlinedButton:
+            return .latoFont(fixedSize: 18, weight: .regular)
         case .none:
             debugPrint("WARNING: Level \(level) buttons are not supported by this FontRules.")
             return .latoFont(fixedSize: 12, weight: isSelected ? .bold : .medium)
