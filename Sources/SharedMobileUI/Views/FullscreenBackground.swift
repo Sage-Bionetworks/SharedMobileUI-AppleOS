@@ -49,9 +49,11 @@ extension View {
         environment(\.fullscreenBackgroundColor, backgroundColor)
     }
 
-    public func fullscreenBackground(_ backgroundColor: Color = .screenBackground) -> some View {
+    public func fullscreenBackground(_ backgroundColor: Color = .screenBackground,
+                                     backButtonStyle: NavigationButtonStyle.BackButtonStyle = .clear) -> some View {
         modifier(FullscreenBackground())
             .fullscreenBackgroundColor(backgroundColor)
+            .backButtonStyle(backButtonStyle)
     }
 }
 

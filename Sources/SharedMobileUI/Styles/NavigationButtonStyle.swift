@@ -35,6 +35,7 @@ import SwiftUI
 
 /// A  button style used to define the style of a button used in navigating.
 public struct NavigationButtonStyle : ButtonStyle {
+    @SwiftUI.Environment(\.backButtonStyle) var backButtonStyle: BackButtonStyle
     private let foregroundColor: Color
     private let backgroundColor: Color
     private let style: Style
@@ -66,6 +67,7 @@ public struct NavigationButtonStyle : ButtonStyle {
             Image.nextButton
         case .backward:
             Image.backButton
+                .background(Circle().fill(backButtonColor()))
         default:
             configuration.label
                 .font(font)
@@ -77,6 +79,21 @@ public struct NavigationButtonStyle : ButtonStyle {
                 .clipShape(Capsule())
         }
     }
+    
+    func backButtonColor() -> Color {
+        switch backButtonStyle {
+        case .clear:
+            return .clear
+        case .white:
+            return .sageWhite
+        case .black:
+            return .sageBlack
+        }
+    }
+    
+    public enum BackButtonStyle : String, Codable {
+        case clear, white, black
+    }
 }
 
 struct NavigationButtonStyle_Previews: PreviewProvider {
@@ -87,5 +104,22 @@ struct NavigationButtonStyle_Previews: PreviewProvider {
             Button("Button", action: {})
                 .buttonStyle(NavigationButtonStyle(.forward))
         }
+    }
+}
+
+struct BackButtonStyleEnvironmentKey: EnvironmentKey {
+    static let defaultValue: NavigationButtonStyle.BackButtonStyle = .clear
+}
+
+extension EnvironmentValues {
+    var backButtonStyle: NavigationButtonStyle.BackButtonStyle {
+        get { self[BackButtonStyleEnvironmentKey.self] }
+        set { self[BackButtonStyleEnvironmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    func backButtonStyle(_ backButtonStyle: NavigationButtonStyle.BackButtonStyle) -> some View {
+        environment(\.backButtonStyle, backButtonStyle)
     }
 }
