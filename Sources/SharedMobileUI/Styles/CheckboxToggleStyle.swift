@@ -56,7 +56,6 @@ public struct CheckboxToggleStyle : ToggleStyle {
                 
                 configuration.label
             }
-            .background(configuration.isOn ? Color.accentColor : Color.sageWhite)
         }
         .buttonStyle(PlainButtonStyle())
     }
