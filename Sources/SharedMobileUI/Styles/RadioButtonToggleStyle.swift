@@ -62,8 +62,7 @@ public struct RadioButtonToggleStyle : ToggleStyle {
                 .padding(.leading, 24)
                 
                 configuration.label
-            }
-            .background(configuration.isOn ? Color.accentColor : Color.sageWhite)
+            }            
         }
         .buttonStyle(PlainButtonStyle())
     }
