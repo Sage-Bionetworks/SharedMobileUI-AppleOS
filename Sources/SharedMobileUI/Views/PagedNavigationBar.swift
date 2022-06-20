@@ -98,7 +98,7 @@ struct PagingDotsView : View {
     let dotSize: CGFloat = 10
     var body: some View {
         HStack {
-            ForEach(0..<viewModel.pageCount) { index in // 1
+            ForEach(0..<viewModel.pageCount, id: \.self) { index in // 1
                       Circle()
                         .stroke(Color.sageBlack)
                         .background(Circle().foregroundColor(viewModel.currentIndex == index ?  .sageBlack : Color.clear))
