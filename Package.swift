@@ -26,7 +26,10 @@ let package = Package(
         .target(
             name: "SharedMobileUI",
             dependencies: [],
-            resources: [ .process("Resources")]),
+            resources: [
+                .process("Resources"),
+                .process("Strings"),
+            ]),
         .testTarget(
             name: "SharedMobileUITests",
             dependencies: ["SharedMobileUI"]),

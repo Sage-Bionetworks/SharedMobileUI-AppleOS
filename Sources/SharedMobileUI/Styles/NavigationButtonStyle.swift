@@ -45,7 +45,7 @@ public struct NavigationButtonStyle : ButtonStyle {
     /// the ``text`` style indicates that the configuration ``Label`` should be shown rather
     /// than replacing the accessibility text with an image of an arrow.
     public enum Style {
-        case text, forward, backward
+        case text, forward, backward, forwardArrow, backArrow
     }
     
     /// Initializer.
@@ -69,14 +69,22 @@ public struct NavigationButtonStyle : ButtonStyle {
             Image.backButton
                 .background(Circle().fill(backButtonColor()))
         default:
-            configuration.label
-                .font(font)
-                .foregroundColor(self.foregroundColor)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(height: 48)
-                .padding(.horizontal, 40)
-                .background(self.backgroundColor)
-                .clipShape(Capsule())
+            HStack {
+                if style == .backArrow {
+                    Image.backArrow
+                }
+                configuration.label
+                if style == .forwardArrow {
+                    Image.forwardArrow
+                }
+            }
+            .font(font)
+            .foregroundColor(self.foregroundColor)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(height: 48)
+            .padding(.horizontal, 32)
+            .background(self.backgroundColor)
+            .clipShape(Capsule())
         }
     }
     
@@ -103,6 +111,8 @@ struct NavigationButtonStyle_Previews: PreviewProvider {
                 .buttonStyle(NavigationButtonStyle())
             Button("Button", action: {})
                 .buttonStyle(NavigationButtonStyle(.forward))
+            Button("Button", action: {})
+                .buttonStyle(NavigationButtonStyle(.forwardArrow))
         }
     }
 }
