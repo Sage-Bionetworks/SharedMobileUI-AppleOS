@@ -53,9 +53,11 @@ public struct PagedNavigationBar : View {
             }
                 
             HStack {
-                Button("Back", action: viewModel.goBack)
-                    .buttonStyle(NavigationButtonStyle(.backward))
-                    .opacity(viewModel.backEnabled ? 1.0 : 0.0)
+                Button(action: viewModel.goBack, label: {
+                    Text("Back", bundle: .module)
+                })
+                .buttonStyle(NavigationButtonStyle(.backward))
+                .opacity(viewModel.backEnabled ? 1.0 : 0.0)
                 
                 Spacer()
                                 
@@ -64,10 +66,10 @@ public struct PagedNavigationBar : View {
                         buttonText
                     }
                     else {
-                        Text("Next")
+                        Text("Next", bundle: .module)
                     }
                 })
-                .buttonStyle(NavigationButtonStyle((viewModel.forwardButtonText == nil) ? .forward : .text))
+                .buttonStyle(NavigationButtonStyle((viewModel.forwardButtonText == nil) ? .forwardArrow : .text))
                 .buttonEnabled(viewModel.forwardEnabled)
             }
         }
@@ -130,3 +132,4 @@ struct PagedNavigationBar_Previews: PreviewProvider {
         }
     }
 }
+
