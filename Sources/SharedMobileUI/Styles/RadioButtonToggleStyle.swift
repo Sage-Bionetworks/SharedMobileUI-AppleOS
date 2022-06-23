@@ -34,13 +34,12 @@
 import SwiftUI
 
 public struct RadioButtonToggleStyle : ToggleStyle {
-    private let dotColor: Color = .hex3E3E3E
-    private let circleSize: CGFloat = 24
-    private let dotSize: CGFloat = 14.4
     private let spacing: CGFloat
+    private let padding: CGFloat?
     
-    public init(spacing: CGFloat = 8) {
+    public init(spacing: CGFloat = 8, padding: CGFloat? = nil) {
         self.spacing = spacing
+        self.padding = padding
     }
     
     public func makeBody(configuration: Configuration) -> some View {
@@ -48,22 +47,29 @@ public struct RadioButtonToggleStyle : ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             HStack(spacing: spacing) {
-                ZStack {
-                    Circle()
-                        .strokeBorder(dotColor, lineWidth: 2.5)
-                        .frame(width: circleSize, height: circleSize)
-                    Circle()
-                        .fill(dotColor)
-                        .frame(width: dotSize, height: dotSize)
-                        .opacity(configuration.isOn ? 1 : 0)
-                }
-                .padding(.top, 17)
-                .padding(.bottom, 15)
-                .padding(.leading, 24)
-                
+                RadioButtonToggle(isOn: configuration.isOn)
                 configuration.label
-            }            
+            }
+            .padding(.all, padding)
         }
         .buttonStyle(PlainButtonStyle())
+    }
+}
+
+struct RadioButtonToggle : View {
+    private let dotColor: Color = .hex3E3E3E
+    private let circleSize: CGFloat = 24
+    private let dotSize: CGFloat = 14.4
+    let isOn: Bool
+    var body: some View {
+        ZStack {
+            Circle()
+                .strokeBorder(dotColor, lineWidth: 2.5)
+                .frame(width: circleSize, height: circleSize)
+            Circle()
+                .fill(dotColor)
+                .frame(width: dotSize, height: dotSize)
+                .opacity(isOn ? 1 : 0)
+        }
     }
 }
