@@ -34,7 +34,10 @@
 import SwiftUI
 
 public struct SelectionToggleStyle : ToggleStyle {
+    #if os(iOS)
     @Environment(\.editMode) private var editMode
+    #endif
+    
     private let spacing: CGFloat
     private let selectedColor: Color
     private let isSingleSelect: Bool
@@ -59,7 +62,9 @@ public struct SelectionToggleStyle : ToggleStyle {
     @ViewBuilder
     func buttonView(_ configuration: Configuration) -> some View {
         Button {
+            #if os(iOS)
             if editMode?.wrappedValue.isEditing ?? false { return } // Exit early if editing
+            #endif
             configuration.isOn.toggle()
         } label: {
             HStack(spacing: spacing) {
