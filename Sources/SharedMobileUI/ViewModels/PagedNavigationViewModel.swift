@@ -39,6 +39,8 @@ public final class PagedNavigationViewModel : ObservableObject {
     @Published public var progressHidden: Bool
     /// progress as a fraction
     @Published public var fraction: Double = 0
+    /// Is this navigator presenting? This flag can be used to dismiss a modal presentation.
+    @Published public var isPresenting: Bool = true
     
     func updateFraction() {
         self.fraction = Double(currentIndex) / Double(pageCount > 0 ? pageCount : 1)
@@ -50,29 +52,52 @@ public final class PagedNavigationViewModel : ObservableObject {
     /// Increment the ``currentIndex`` and update the state of ``backEnabled`` and
     /// ``currentDirection``.
     public func increment() {
-        guard self.currentIndex + 1 < self.pageCount else { return }
-        self.currentIndex += 1
-        self.backEnabled = self.currentIndex > 0
         self.currentDirection = .forward
+        if self.currentIndex + 1 < self.pageCount {
+            self.currentIndex += 1
+        }
+        else if isLoopingNavigator {
+            self.currentIndex = 0
+        }
+        else {
+            self.isPresenting = false
+        }
+        updateBackEnabled()
     }
     
     /// The action to call when the back button is tapped. This will default to calling ``decrement()``.
     lazy public var goBack: (() -> Void) = decrement
-    
+
     /// Decrement the ``currentIndex`` and update the state of ``backEnabled`` and
     /// ``currentDirection``.
     public func decrement() {
-        guard self.currentIndex > 0 else { return }
-        self.currentIndex -= 1
-        self.backEnabled = self.currentIndex > 0
         self.currentDirection = .backward
+        if let nextIndex = indexBefore() {
+            self.currentIndex = nextIndex
+        }
+        updateBackEnabled()
     }
     
-    public init(pageCount: Int = 0, currentIndex: Int = 0, buttonText: Text? = nil, progressHidden: Bool = false) {
+    func updateBackEnabled() {
+        self.backEnabled = isPresenting && (indexBefore().map { !backDisabledIndexes.contains($0) } ?? false)
+    }
+    
+    func indexBefore() -> Int? {
+        currentIndex > 0 ? currentIndex - 1 : ( isLoopingNavigator && pageCount > 0 ? pageCount - 1 : nil )
+    }
+    
+    /// Does this navigator move in a loop?
+    public let isLoopingNavigator: Bool
+    
+    /// A list of the index values where the back button should be disabled.
+    public var backDisabledIndexes = Set<Int>()
+    
+    public init(pageCount: Int = 0, currentIndex: Int = 0, buttonText: Text? = nil, progressHidden: Bool = false, isLoopingNavigator: Bool = false) {
         self.pageCount = pageCount
         self.progressHidden = progressHidden
         self.currentIndex = currentIndex
         self.backEnabled = currentIndex > 0
         self.forwardButtonText = buttonText
+        self.isLoopingNavigator = isLoopingNavigator
     }
 }
