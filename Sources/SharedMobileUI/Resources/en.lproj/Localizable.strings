@@ -1,0 +1,11 @@
+/* Text("Back", bundle: .module) */
+"Back" = "Back";
+
+/* Button("Button", action: {}) */
+"Button" = "Button";
+
+/* ///     Text("Hello, World") */
+"Hello, World" = "Hello, World";
+
+/* .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 1, buttonText: Text("Next"))) */
+"Next" = "Next";
