@@ -93,9 +93,9 @@ struct DefaultFontRules : FontRules {
     func headerFont(at level: Int) -> Font {
         switch HeaderLevel(rawValue: level) {
         case .h1:
-            return .playfairDisplayFont(21, relativeTo: .largeTitle)
+            return .latoFont(21, relativeTo: .largeTitle)
         case .h2:
-            return .playfairDisplayFont(18, relativeTo: .largeTitle)
+            return .latoFont(18, relativeTo: .largeTitle)
         case .h3:
             return .latoFont(24, relativeTo: .title, weight: .bold)
         case .h4:
