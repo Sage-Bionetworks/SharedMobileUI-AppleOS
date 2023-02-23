@@ -20,8 +20,7 @@ public struct PagedNavigationBar : View {
             
             if self.showsDots, viewModel.pageCount > 0, !viewModel.progressHidden {
                 PagingDotsView()
-                    .padding(.vertical, (viewModel.forwardButtonText != nil) || viewModel.pageCount > 7 ?
-                                8.0 : 0.0)
+                    .padding(.vertical, 8)
             }
                 
             HStack {
